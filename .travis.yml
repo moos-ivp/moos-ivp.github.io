@@ -1,0 +1,28 @@
+language: c++
+
+sudo: required
+
+before_install:
+  - wget https://github.com/spf13/hugo/releases/download/v0.15/hugo_0.15_amd64.deb
+  - sudo dpkg -i hugo_0.15_amd64.deb
+  - sudo apt-get -qq update
+  - sudo apt-get install -y python-pygments
+
+before_script:
+  - cd ${TRAVIS_BUILD_DIR}/..
+  - git clone https://gist.github.com/b73112ba396df4b6f1c0a9ac6c122ce5.git gist-deploy
+  - cd ${TRAVIS_BUILD_DIR}
+  - hugo version
+  - git clone --depth 1 --recursive https://github.com/spf13/hugoThemes.git themes
+
+script:
+  - hugo
+  - export DEPLOY_DIR=${TRAVIS_BUILD_DIR}/public
+
+after_success:
+  - pwd
+  - bash ${TRAVIS_BUILD_DIR}/../gist-deploy/deploy_ghpages.sh
+
+env:
+  global:
+    - GIT_EMAIL: travis@example.com
