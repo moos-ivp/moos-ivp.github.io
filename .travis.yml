@@ -1,28 +1,32 @@
 language: c++
 
+branches:
+  only:
+    - devel
+
 sudo: required
 
 before_install:
   - wget https://github.com/spf13/hugo/releases/download/v0.15/hugo_0.15_amd64.deb
   - sudo dpkg -i hugo_0.15_amd64.deb
-  - sudo apt-get -qq update
-  - sudo apt-get install -y python-pygments
 
 before_script:
   - cd ${TRAVIS_BUILD_DIR}/..
   - git clone https://gist.github.com/b73112ba396df4b6f1c0a9ac6c122ce5.git gist-deploy
   - cd ${TRAVIS_BUILD_DIR}
   - hugo version
-  - git clone --depth 1 --recursive https://github.com/spf13/hugoThemes.git themes
+  - mkdir themes
+  - git clone --depth 1 https://github.com/aerohub/hugo-identity-theme themes/identity
 
 script:
   - hugo
   - export DEPLOY_DIR=${TRAVIS_BUILD_DIR}/public
 
-after_success:
+deploy:
   - pwd
-  - bash ${TRAVIS_BUILD_DIR}/../gist-deploy/deploy_ghpages.sh
+  - bash ${TRAVIS_BUILD_DIR}/../gist-deploy/deploy_ghpages_master.sh
 
 env:
   global:
     - GIT_EMAIL: travis@example.com
+    - secure: "I7zwS3kgzixfF154QliVa0AdZXNP4KvCfBVtEdY4CQgmAGug9IRAtzMheMv+jjdL0E4veHgctdrBRG5HfqNLLum5yebZ2qa685B46J+8fxGhC8NkGamjk+450Iwbkc86Iblh6JnnNEns/5ciaFXKdtrnbNqFFKN0x560wg161zDzJ5t+GCYnc0nKbE4T6JJh2nyoc8ViHURXs25ahfFhhjaQ7IsqlVcwvKSzvZ78KnfYlYZQNoeMwK7tiJJ1+nws+e8NzuEWEy/2npHNpdJmuz/I8I3d+hL6FXk6LPMdboCPgtmEaiLfsaFpxxJ/TYmpGDXKbRHZy8xNF93IHLqgfjUBbb8ydh9kgT/8t+oWMD5XrEx7gTiUSbejAabojcy/WEHHSIo534zqxnqjkYccH/e1D4bcKQaVoAxYeoQOH3yCXbhAGTBWWoYxV4npBFd8vqSET6EHj6G1p2YVtRlQTrDI7GrvLh0vSNBTK+0IvO7Xto76A9/P3T+OhW5mE2k74q8LXrpQ8w3qISV2Id4i15kzR+CuQPzgTsaADdPgDZugS07kqRkBG5mwEK48p7MqWyB9jIHnRnuWHOjhYc2Ug7CO/l4avCp/jg+ncSH6Hkwb8kGEySnVW8kMJfw52GAn4X5lQnd3JM8pmMDRmgLSTTq6o5k28MTM/k9arldQOIk="
