@@ -2,31 +2,31 @@ language: c++
 
 branches:
   only:
-  - devel
+    - devel
 
 sudo: required
 
 before_install:
-- wget https://github.com/spf13/hugo/releases/download/v0.15/hugo_0.15_amd64.deb
-- sudo dpkg -i hugo_0.15_amd64.deb
+  - wget https://github.com/spf13/hugo/releases/download/v0.15/hugo_0.15_amd64.deb
+  - sudo dpkg -i hugo_0.15_amd64.deb
 
 before_script:
-- cd ${TRAVIS_BUILD_DIR}/..
-- git clone https://gist.github.com/b73112ba396df4b6f1c0a9ac6c122ce5.git gist-deploy
-- cd ${TRAVIS_BUILD_DIR}
-- hugo version
-- mkdir themes
-- git clone --depth 1 https://github.com/aerohub/hugo-identity-theme themes/identity
+  - cd ${TRAVIS_BUILD_DIR}/..
+  - git clone https://gist.github.com/b73112ba396df4b6f1c0a9ac6c122ce5.git gist-deploy
+  - cd ${TRAVIS_BUILD_DIR}
+  - hugo version
+  - mkdir themes
+  - git clone --depth 1 https://github.com/aerohub/hugo-identity-theme themes/identity
 
 script:
-- hugo
-- export DEPLOY_DIR=${TRAVIS_BUILD_DIR}/public
+  - hugo
+  - export DEPLOY_DIR=${TRAVIS_BUILD_DIR}/public
 
-deploy:
-- pwd
-- bash ${TRAVIS_BUILD_DIR}/../gist-deploy/deploy_ghpages_master.sh
+after_success:
+  - pwd
+  - bash ${TRAVIS_BUILD_DIR}/../gist-deploy/deploy_ghpages_master.sh
 
 env:
   global:
-  - GIT_EMAIL: travis@example.com
-  - secure: TbbUkqt1QEcyNiRqovMdCR6Lo93sAHVnlI/net8u8EtUaa3yQj8DTGJmG+jXIKIibhz7dP/EhjngE65ALI4P2yDdaYvUk69TQig875SDZDPjyzcbAakeE7ifLKkBe9yZ4ImzVoYpqP4s6a3V03GhwzCaVogrsEUhlgZwIpE+UK0Hj+/UGirIaWVIiKM0fnm++mR505K203Zy+sM3yltUD6XvZ0JchJmIKpmhrNku30gqS2dfXyUSkEE3BceUAEJl1CawNjQoe/lppdYkDWaFfTwTxPKTI0m54fcNAp73ijYklXb9kyzHy/ATsn3v0wA+r8vqW+F/XokFsgesFbvDHW3kvRiXb6RbH1MLGsv8xjs13mthMzqu1it+uo/SD8GquGl7pJOTeX6ukDsgfMw5oxN6oXg51J4/SYlMLaqcl6x37AtjECACvsbH7WaXTYiLYY4/uM9IUqqHklCosAXiox9zX0H27AxSbrstc9FeNYPt899T1YBLH8J1l3Hq3zwBCSZ0S/cMcf3Vc18Goulh14+TOMYCen4mZ+y9IupOy+zN3S+I7CLzacaT1Szcw25yv5+y8/dw2qfaILYAgklD/22aJ9UEHolzo418c0HBVb8QuYHjxsbIiEvUDKngiL+VAEdhAuDtxCmAQC84dcy0XQLKQWu6950gIUywcpkhOOA=
+    - GIT_EMAIL: travis@example.com
+    - secure: TbbUkqt1QEcyNiRqovMdCR6Lo93sAHVnlI/net8u8EtUaa3yQj8DTGJmG+jXIKIibhz7dP/EhjngE65ALI4P2yDdaYvUk69TQig875SDZDPjyzcbAakeE7ifLKkBe9yZ4ImzVoYpqP4s6a3V03GhwzCaVogrsEUhlgZwIpE+UK0Hj+/UGirIaWVIiKM0fnm++mR505K203Zy+sM3yltUD6XvZ0JchJmIKpmhrNku30gqS2dfXyUSkEE3BceUAEJl1CawNjQoe/lppdYkDWaFfTwTxPKTI0m54fcNAp73ijYklXb9kyzHy/ATsn3v0wA+r8vqW+F/XokFsgesFbvDHW3kvRiXb6RbH1MLGsv8xjs13mthMzqu1it+uo/SD8GquGl7pJOTeX6ukDsgfMw5oxN6oXg51J4/SYlMLaqcl6x37AtjECACvsbH7WaXTYiLYY4/uM9IUqqHklCosAXiox9zX0H27AxSbrstc9FeNYPt899T1YBLH8J1l3Hq3zwBCSZ0S/cMcf3Vc18Goulh14+TOMYCen4mZ+y9IupOy+zN3S+I7CLzacaT1Szcw25yv5+y8/dw2qfaILYAgklD/22aJ9UEHolzo418c0HBVb8QuYHjxsbIiEvUDKngiL+VAEdhAuDtxCmAQC84dcy0XQLKQWu6950gIUywcpkhOOA=
