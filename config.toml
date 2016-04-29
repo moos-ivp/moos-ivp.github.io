@@ -39,6 +39,11 @@ googleAnalytics = "UA-77074200-1"
 		icon = "fa-globe"
 		link = "http://moos-ivp.org"
 
+	[[params.social]]
+		title = "Website"
+		icon = "fa-book"
+		link = "http://moos-ivp.github.io/open-docs"
+
 	# Footer settings
 	[params.footer]
 		copyright = "MOOS-IvP"
